@@ -23,9 +23,17 @@ export default function Layout({ children }) {
         <Toolbar>
           <NextLink href="/" passHref>
             <Link>
-              <Typography>E-Commerce</Typography>
+              <Typography className={classes.brand}>E_COMMERCE</Typography>
             </Link>
           </NextLink>
+          <div className={classes.grow}>
+            <NextLink href="/cart" passHref>
+              <Link>Cart</Link>
+            </NextLink>
+            <NextLink href="/login" passHref>
+              <Link>Login</Link>
+            </NextLink>
+          </div>
         </Toolbar>
       </AppBar>
       <Container className={classes.main}>{children}</Container>

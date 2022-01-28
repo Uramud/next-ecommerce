@@ -3,8 +3,10 @@
 // import styles from '../styles/Home.module.css';
 
 import {
+  Button,
   Card,
   CardActionArea,
+  CardActions,
   CardContent,
   CardMedia,
   Grid,
@@ -31,10 +33,16 @@ export default function Home() {
                     image={product.image}
                     title={product.name}
                   ></CardMedia>
+                  <CardContent>
+                    <Typography>{product.name}</Typography>
+                  </CardContent>
                 </CardActionArea>
-                <CardContent>
-                  <Typography>{product.name}</Typography>
-                </CardContent>
+                <CardActions>
+                  <Typography>${product.price}</Typography>
+                  <Button size="small" color="primary">
+                    Add to cart
+                  </Button>
+                </CardActions>
               </Card>
             </Grid>
           ))}

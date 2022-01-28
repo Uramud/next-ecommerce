@@ -18,7 +18,7 @@ export default function Layout({ children }) {
         </Toolbar>
       </AppBar>
       <Container className={classes.main}>{children}</Container>
-      <footer>
+      <footer className={classes.footer}>
         <Typography>
           All rights reserved, Next Ecommerce. &copy; {new Date().getFullYear()}
         </Typography>

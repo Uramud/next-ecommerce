@@ -6,7 +6,6 @@ const useStyles = makeStyles({
     '& a': {
       color: '#fff',
       marginLeft: 10,
-      textDecoration: 'none',
     },
   },
 

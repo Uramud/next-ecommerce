@@ -3,6 +3,7 @@ const data = {
   products: [
     {
       name: 'CheckBox Shirt',
+      slug: 'checkbox-shirt',
       Category: 'Shirts',
       image: '/images/shirt1.jpg',
       price: '$20',
@@ -14,6 +15,7 @@ const data = {
     },
     {
       name: 'Tie',
+      slug: 'tie',
       Category: 'Ties',
       image: '/images/tie1.jpg',
       price: '$5',
@@ -25,6 +27,7 @@ const data = {
     },
     {
       name: 'Jeans Pants',
+      slug: 'jeans-pants',
       Category: 'Pants',
       image: '/images/pant1.jpg',
       price: '$15',
@@ -36,6 +39,7 @@ const data = {
     },
     {
       name: 'Boots',
+      slug: 'boots',
       Category: 'Shoes',
       image: '/images/shoe1.jpg',
       price: '$30',
@@ -47,6 +51,7 @@ const data = {
     },
     {
       name: 'Watch',
+      slug: 'watch',
       Category: 'watches',
       image: '/images/watch1.jpg',
       price: '$16000',

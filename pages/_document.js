@@ -1,3 +1,4 @@
+import { Link } from '@material-ui/core';
 import { ServerStyleSheets } from '@material-ui/core/styles';
 import Document, { Head, Html, Main, NextScript } from 'next/document';
 import React from 'react';
@@ -6,7 +7,13 @@ export default class MyDocument extends Document {
   render() {
     return (
       <Html lang="en">
-        <Head></Head>
+        <Head>
+          {/* to get roboto font from google in our project */}
+          <Link
+            rel="stylesheet"
+            href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700&display=swap"
+          />
+        </Head>
         <body>
           <Main />
           {/* here NextScript is run by next js */}

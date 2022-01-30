@@ -34,6 +34,8 @@ export default function Home() {
                       component="img"
                       image={product.image}
                       title={product.name}
+                      width={250}
+                      height={250}
                     ></CardMedia>
                     <CardContent>
                       <Typography>{product.name}</Typography>

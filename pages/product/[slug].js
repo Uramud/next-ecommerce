@@ -29,11 +29,13 @@ export default function ProductScreen() {
   return (
     <Layout title={product.name} description={product.description}>
       <div className={classes.section}>
-        <NextLink href="/" passHref>
-          <Link>
-            <Typography>Back to product</Typography>
-          </Link>
-        </NextLink>
+        <Button>
+          <NextLink href="/" passHref>
+            <Link>
+              <Typography>Back to product</Typography>
+            </Link>
+          </NextLink>
+        </Button>
       </div>
       {/* parent grid */}
       <Grid container spacing={1}>
@@ -42,8 +44,8 @@ export default function ProductScreen() {
           <Image
             src={product.image}
             alt={product.name}
-            width={640}
-            height={640}
+            width={440}
+            height={440}
             layout="responsive"
           ></Image>
         </Grid>

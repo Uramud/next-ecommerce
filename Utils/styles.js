@@ -3,6 +3,7 @@ import { makeStyles } from '@material-ui/core';
 const useStyles = makeStyles({
   navbar: {
     backgroundColor: '#203040',
+    display: 'flex',
     '& a': {
       color: '#fff',
       marginLeft: 10,
@@ -15,7 +16,7 @@ const useStyles = makeStyles({
   },
 
   grow: {
-    flexGrow: 1,
+    flexWrap: 'wrap',
   },
 
   main: {

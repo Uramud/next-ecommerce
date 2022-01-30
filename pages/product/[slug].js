@@ -14,15 +14,15 @@ import {
 } from '@material-ui/core';
 import useStyles from '../../utils/styles';
 import Image from 'next/image';
+import Product from '../../models/Product';
+import db from '../../utils/db';
 
-export default function ProductScreen() {
+export default function ProductScreen(props) {
+  const { product } = props;
   const classes = useStyles();
-  const router = useRouter();
-  //we use router.query.slug to get the slug from the url
-  const { slug } = router.query;
 
   //below we fetched product from data.js and we are filtering it by slug
-  const product = data.products.find((p) => p.slug === slug);
+
   if (!product) {
     return <div>Product not found</div>;
   }
@@ -110,4 +110,18 @@ export default function ProductScreen() {
       </Grid>
     </Layout>
   );
+}
+
+export async function getServerSideProps(context) {
+  const { params } = context;
+  const { slug } = params;
+  await db.connect();
+  //here lean() to seralize the data and which is important else server error occurs
+  const product = await Product.findOne({ slug }).lean();
+  await db.disconnect();
+  return {
+    props: {
+      product: db.convertDocToObj(product),
+    },
+  };
 }

@@ -6,8 +6,11 @@ export const StoreContext = createContext();
 
 const initialState = {
   darkMode: Cookies.get('darkMode') === 'ON' ? true : false,
+  //here JSON.parse get a string which is converted into javascript object
   cart: {
-    cartItems: [],
+    cartItems: Cookies.get('cartItems')
+      ? JSON.parse(Cookies.get('cartItems'))
+      : [],
   },
 };
 
@@ -27,8 +30,8 @@ function reducer(state, action) {
       const newItem = action.payload;
       //state.cart.cartItems. is an array from the state above
       const existItem = state.cart.cartItems.find(
-        // (item) => item.name === newItem.name , it comparing both name
-        (item) => item.name === newItem.name
+        // (item) => item._id === newItem._id , it comparing both id ie from database
+        (item) => item._id === newItem._id
       );
       //below cartItems = existItem , means newItem already exist in cartItems so updating its quantity
       const cartItems = existItem
@@ -36,6 +39,7 @@ function reducer(state, action) {
             item.name === existItem.name ? newItem : item
           )
         : [...state.cart.cartItems, newItem];
+      Cookies.set('cartItems', JSON.stringify(cartItems));
       return {
         ...state,
         cart: { ...state.cart, cartItems },

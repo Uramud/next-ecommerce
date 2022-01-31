@@ -1,6 +1,4 @@
-import React from 'react';
-import { useRouter } from 'next/router';
-import data from '../../utils/data';
+import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../../components/layout';
 import NextLink from 'next/link';
 import {
@@ -16,8 +14,11 @@ import useStyles from '../../utils/styles';
 import Image from 'next/image';
 import Product from '../../models/Product';
 import db from '../../utils/db';
+import { StoreContext } from '../../utils/Store';
+import axios from 'axios';
 
 export default function ProductScreen(props) {
+  const { dispatch } = useContext(StoreContext);
   const { product } = props;
   const classes = useStyles();
 
@@ -26,6 +27,19 @@ export default function ProductScreen(props) {
   if (!product) {
     return <div>Product not found</div>;
   }
+  //add to cart function
+  const addToCartHandler = async () => {
+    const { data } = await axios.get(`/api/products/${product._id}`);
+    if (data.countInStock <= 0) {
+      window.alert('Product is out of stock, sorry!');
+      return;
+    }
+    dispatch({
+      type: 'CART_ADD_ITEM',
+      payload: { ...product, quantity: 1 },
+    });
+  };
+  // above ...product is an object
   return (
     <Layout title={product.name} description={product.description}>
       <div className={classes.section}>
@@ -96,13 +110,14 @@ export default function ProductScreen(props) {
                 </Grid>
               </ListItem>
               <ListItem>
-                <NextLink href={`/order`} passHref>
-                  <Link>
-                    <Button fullwidth variant="contained" color="secondary">
-                      Add to cart
-                    </Button>
-                  </Link>
-                </NextLink>
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="secondary"
+                  onClick={addToCartHandler}
+                >
+                  Add to cart
+                </Button>
               </ListItem>
             </List>
           </Card>

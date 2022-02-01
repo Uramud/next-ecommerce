@@ -23,8 +23,10 @@ import Image from 'next/image';
 import dynamic from 'next/dynamic';
 import { disconnect } from 'mongoose';
 import axios from 'axios';
+import { useRouter } from 'next/router';
 
 function CartScreen() {
+  const router = useRouter();
   const { state, dispatch } = useContext(StoreContext);
   const {
     cart: { cartItems },
@@ -32,7 +34,7 @@ function CartScreen() {
 
   const updateCartHandler = async (item, quantity) => {
     const { data } = await axios.get(`/api/products/${item._id}`);
-    if (data.countInStock <= 0) {
+    if (data.countInStock < quantity) {
       window.alert('Product is out of stock !!!');
       return;
     }
@@ -41,6 +43,10 @@ function CartScreen() {
 
   const removeItemHandler = (item) => {
     dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  };
+
+  const checkOutHandler = () => {
+    router.push('/shipping');
   };
   return (
     <Layout title="My Cart">
@@ -136,7 +142,12 @@ function CartScreen() {
                   </Typography>
                 </ListItem>
                 <ListItem>
-                  <Button variant="container" color="secondary" fullWidth>
+                  <Button
+                    onClick={checkOutHandler}
+                    variant="container"
+                    color="secondary"
+                    fullWidth
+                  >
                     Check Out
                   </Button>
                 </ListItem>

@@ -21,12 +21,27 @@ import { StoreContext } from '../utils/Store';
 import NextLink from 'next/link';
 import Image from 'next/image';
 import dynamic from 'next/dynamic';
+import { disconnect } from 'mongoose';
+import axios from 'axios';
 
 function CartScreen() {
-  const { state } = useContext(StoreContext);
+  const { state, dispatch } = useContext(StoreContext);
   const {
     cart: { cartItems },
   } = state;
+
+  const updateCartHandler = async (item, quantity) => {
+    const { data } = await axios.get(`/api/products/${item._id}`);
+    if (data.countInStock <= 0) {
+      window.alert('Product is out of stock !!!');
+      return;
+    }
+    dispatch({ type: 'CART_ADD_ITEM', payload: { ...item, quantity } });
+  };
+
+  const removeItemHandler = (item) => {
+    dispatch({ type: 'CART_REMOVE_ITEM', payload: item });
+  };
   return (
     <Layout title="My Cart">
       <Typography compnent="h1" variant="h1">
@@ -34,8 +49,10 @@ function CartScreen() {
       </Typography>
       {cartItems.length === 0 ? (
         <div>
-          Cart is Empty!!!
-          <NextLink href="/">Go Shopping</NextLink>
+          Cart is Empty!!!{' '}
+          <NextLink href="/" passHref>
+            <Link> Go Shopping </Link>
+          </NextLink>
         </div>
       ) : (
         <Grid container spacing={1}>
@@ -76,7 +93,12 @@ function CartScreen() {
                       </TableCell>
 
                       <TableCell align="right">
-                        <Select value={item.quantity}>
+                        <Select
+                          value={item.quantity}
+                          onChange={(e) =>
+                            updateCartHandler(item, e.target.value)
+                          }
+                        >
                           {[...Array(item.countInStock).keys()].map((x) => (
                             <MenuItem key={x + 1} value={x + 1}>
                               {x + 1}
@@ -88,7 +110,11 @@ function CartScreen() {
                       <TableCell align="right">${item.price}</TableCell>
 
                       <TableCell align="right">
-                        <Button variant="conatined" color="secondary">
+                        <Button
+                          variant="conatined"
+                          color="secondary"
+                          onClick={() => removeItemHandler(item)}
+                        >
                           X
                         </Button>
                       </TableCell>
@@ -123,6 +149,7 @@ function CartScreen() {
   );
 }
 //here ssr is server side rendering for that set es6 to true in eslintrc.json
+//so ssr is false
 export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });
 //here at the beginning of sunction export is removed and then we are adding dynamic and exporting function( CartScreen ) using dynamic.
 //it is done to avoid badge problem  here it hepls to render the page only in client side.

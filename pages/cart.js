@@ -20,8 +20,9 @@ import Layout from '../components/layout';
 import { StoreContext } from '../utils/Store';
 import NextLink from 'next/link';
 import Image from 'next/image';
+import dynamic from 'next/dynamic';
 
-export default function CartScreen() {
+function CartScreen() {
   const { state } = useContext(StoreContext);
   const {
     cart: { cartItems },
@@ -121,3 +122,7 @@ export default function CartScreen() {
     </Layout>
   );
 }
+//here ssr is server side rendering for that set es6 to true in eslintrc.json
+export default dynamic(() => Promise.resolve(CartScreen), { ssr: false });
+//here at the beginning of sunction export is removed and then we are adding dynamic and exporting function( CartScreen ) using dynamic.
+//it is done to avoid badge problem  here it hepls to render the page only in client side.

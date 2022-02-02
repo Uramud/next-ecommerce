@@ -6,14 +6,29 @@ import {
   Typography,
   Link,
 } from '@material-ui/core';
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Layout from '../components/Layout';
 import useStyles from '../utils/styles';
 import NextLink from 'next/link';
 import axios from 'axios';
+import { StoreContext } from '../utils/Store';
+import { useRouter } from 'next/router';
+import Cookies from 'js-cookie';
 
 export default function Login() {
-  //for eamil and password
+  const router = useRouter();
+  const { redirect } = router.query; //login?redirect=shipping then it will redirect to shipping page
+
+  const { state, dispatch } = useContext(StoreContext);
+  const { userInfo } = state;
+  useEffect(() => {
+    // due to useeffect we check if userInfo is null or not only one time at the time of loading this component
+    if (userInfo) {
+      router.push('/');
+    }
+  }, []);
+
+  //for email and password
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -29,7 +44,9 @@ export default function Login() {
         email,
         password,
       });
-      alert('successfully logged in');
+      dispatch({ type: 'USER_LOGIN', payload: data });
+      Cookies.set('userInfo', JSON.stringify(data));
+      router.push(redirect || '/');
     } catch (err) {
       alert(err.response.data ? err.response.data.message : err.message);
     }

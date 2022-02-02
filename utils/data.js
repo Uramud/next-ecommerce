@@ -1,5 +1,21 @@
 //object with in object
+import bcrypt from 'bcryptjs';
+
 const data = {
+  users: [
+    {
+      name: 'Rosan',
+      email: 'uramudrosan@gmail.com',
+      password: bcrypt.hashSync('Uramud07@'),
+      isAdmin: true,
+    },
+    {
+      name: 'Dumaru',
+      email: 'uramud07@gmail.com',
+      password: bcrypt.hashSync('Uramud07@'),
+      isAdmin: false,
+    },
+  ],
   products: [
     {
       name: 'CheckBox Shirt',

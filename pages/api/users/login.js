@@ -21,7 +21,7 @@ handler.post(async (req, res) => {
     });
   } else {
     res.status(401).send({
-      message: 'Invalid User or Password',
+      message: 'Invalid Email or Password',
     });
   }
 });

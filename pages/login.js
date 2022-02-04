@@ -74,7 +74,7 @@ export default function Login() {
               defaultValue=""
               rules={{
                 required: true,
-                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,4}$/,
+                pattern: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
               }}
               render={({ field }) => (
                 <TextField

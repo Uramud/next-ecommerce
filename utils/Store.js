@@ -11,6 +11,9 @@ const initialState = {
     cartItems: Cookies.get('cartItems')
       ? JSON.parse(Cookies.get('cartItems'))
       : [],
+    shippingAddress: Cookies.get('shippingAddress')
+      ? JSON.parse(Cookies.get('shippingAddress'))
+      : [],
   },
 
   userInfo: Cookies.get('userInfo')
@@ -18,6 +21,7 @@ const initialState = {
     : null,
 };
 
+//Note ...state is previous state
 function reducer(state, action) {
   switch (action.type) {
     case 'DARK_MODE_ON':
@@ -59,6 +63,13 @@ function reducer(state, action) {
         cart: { ...state.cart, cartItems },
       };
     }
+    case 'SAVE_SHIPPING_ADDRESS': {
+      return {
+        ...state,
+        cart: { ...state.cart, shippingAddress: action.payload },
+      };
+    }
+
     case 'USER_LOGIN': {
       return { ...state, userInfo: action.payload };
     }

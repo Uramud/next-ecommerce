@@ -26,6 +26,7 @@ export default function payment() {
   const {
     cart: { shippingAddress },
   } = state;
+
   useEffect(() => {
     if (!shippingAddress.address) {
       router.push('/shipping');
@@ -33,6 +34,7 @@ export default function payment() {
       setPaymentMethod(Cookies.get('paymentMethod') || '');
     }
   }, []);
+
   const submitHandler = (e) => {
     closeSnackbar();
     e.preventDefault();
@@ -41,7 +43,7 @@ export default function payment() {
     } else {
       dispatch({ type: 'SAVE_PAYMENT_METHOD', payload: paymentMethod });
       Cookies.set('paymentMethod', paymentMethod);
-      router.push('/placeOrder');
+      router.push('/placeorder');
     }
   };
   return (
